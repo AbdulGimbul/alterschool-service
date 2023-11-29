@@ -3,7 +3,7 @@ package com.alterdev.alterschool.model.request
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
 
-data class JadwalPpdbUpdateReq(
+data class RegisScheduleUpdateReq(
     val periode: String? = null,
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")

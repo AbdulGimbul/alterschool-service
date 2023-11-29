@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.validation.constraints.NotBlank
 import java.util.*
 
-data class JadwalPpdbCreateReq(
+data class RegisScheduleCreateReq(
     @NotBlank(message = "Periode tidak boleh kosong")
     val periode: String,
 
@@ -18,7 +18,4 @@ data class JadwalPpdbCreateReq(
 
     @NotBlank(message = "Status tidak boleh kosong")
     val status: Boolean,
-
-    @NotBlank(message = "Gambar brosur tidak boleh kosong")
-    val imgBrosur: String
 )

@@ -3,21 +3,21 @@ package com.alterdev.alterschool.model.response
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.util.*
 
-data class JadwalPpdbResponse(
+data class RegisScheduleResponse(
 
-    val id: Long,
+    val id: String,
 
     val periode: String,
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    val tglMulai: Date,
+    val startTime: Date,
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    val tglSelesai: Date,
+    val endTime: Date,
 
     val status: Boolean,
 
-    val imgBrosur: String,
+    val image: String?,
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     val createdAt: Date,

@@ -3,6 +3,7 @@ package com.alterdev.alterschool.advice
 import com.alterdev.alterschool.util.HttpResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -18,6 +19,11 @@ class CustomExceptionHandler {
             message = e.message ?: "Something went wrong",
             status = HttpStatus.INTERNAL_SERVER_ERROR
         )
+    }
+
+    @ExceptionHandler(UsernameNotFoundException::class)
+    fun handleUsernameNotFoundException(e: UsernameNotFoundException): ResponseEntity<Map<String, Any?>> {
+        return HttpResponse.setResp<String>(message = e.message ?: "User not found", status = HttpStatus.NOT_FOUND)
     }
 
     @ExceptionHandler(IllegalArgumentException::class)
