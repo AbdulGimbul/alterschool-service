@@ -6,5 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface AuthMenuRepository
-    : JpaRepository<AuthMenu, Int> {
-}
+    : JpaRepository<AuthMenu, String>{
+
+        fun findAuthMenusByRolesId(id: String): List<AuthMenu>
+    }

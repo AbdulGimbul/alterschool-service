@@ -6,4 +6,4 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface RegisScheduleRepository
-    : JpaRepository<RegistrationSchedule, Int>
+    : JpaRepository<RegistrationSchedule, String>

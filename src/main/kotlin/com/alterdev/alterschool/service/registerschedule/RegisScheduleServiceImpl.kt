@@ -2,11 +2,12 @@ package com.alterdev.alterschool.service.registerschedule
 
 import com.alterdev.alterschool.config.ValidationUtil
 import com.alterdev.alterschool.entity.RegistrationSchedule
+import com.alterdev.alterschool.model.request.ListRequest
 import com.alterdev.alterschool.model.request.RegisScheduleCreateReq
 import com.alterdev.alterschool.model.request.RegisScheduleUpdateReq
-import com.alterdev.alterschool.model.request.ListRequest
 import com.alterdev.alterschool.model.response.RegisScheduleResponse
 import com.alterdev.alterschool.repository.RegisScheduleRepository
+import com.alterdev.alterschool.util.Helper
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.InputStreamResource
 import org.springframework.data.domain.PageRequest
@@ -34,7 +35,7 @@ class RegisScheduleServiceImpl(
         validationUtil.validate(regisScheduleCreateReq)
 
         val registrationSchedule = RegistrationSchedule(
-            id = UUID.randomUUID().toString(),
+            id = Helper.generateUUIDWithTimestamp(),
             periode = regisScheduleCreateReq.periode,
             startTime = regisScheduleCreateReq.tglMulai,
             endTime = regisScheduleCreateReq.tglSelesai,
@@ -46,12 +47,12 @@ class RegisScheduleServiceImpl(
         return convertJadwalPpdbToJadwalPpdbResponse(registrationSchedule)
     }
 
-    override fun get(id: Int): RegisScheduleResponse {
+    override fun get(id: String): RegisScheduleResponse {
         val jadwalPpdb = findByIdOrThrowNotFound(id)
         return convertJadwalPpdbToJadwalPpdbResponse(jadwalPpdb)
     }
 
-    override fun update(id: Int, regisScheduleUpdateReq: RegisScheduleUpdateReq): RegisScheduleResponse {
+    override fun update(id: String, regisScheduleUpdateReq: RegisScheduleUpdateReq): RegisScheduleResponse {
         val jadwalPpdb = findByIdOrThrowNotFound(id)
         validationUtil.validate(regisScheduleUpdateReq)
 
@@ -68,18 +69,18 @@ class RegisScheduleServiceImpl(
         return convertJadwalPpdbToJadwalPpdbResponse(jadwalPpdb)
     }
 
-    override fun delete(id: Int) {
+    override fun delete(id: String) {
         val jadwalPpdb = findByIdOrThrowNotFound(id)
         regisScheduleRepository.delete(jadwalPpdb)
     }
 
-    override fun getAll(ListRequest: ListRequest): List<RegisScheduleResponse> {
-        val page = regisScheduleRepository.findAll(PageRequest.of(ListRequest.page, ListRequest.size))
+    override fun getAll(listRequest: ListRequest): List<RegisScheduleResponse> {
+        val page = regisScheduleRepository.findAll(PageRequest.of(listRequest.page, listRequest.size))
         val jadwalPpdbList = page.get().collect(Collectors.toList())
         return jadwalPpdbList.map { convertJadwalPpdbToJadwalPpdbResponse(it) }
     }
 
-    override fun uploadImage(id: Int, imageFile: MultipartFile): RegisScheduleResponse {
+    override fun uploadImage(id: String, imageFile: MultipartFile): RegisScheduleResponse {
         if (imageFile.isEmpty) {
             throw IllegalArgumentException("Image file is required")
         }
@@ -108,8 +109,8 @@ class RegisScheduleServiceImpl(
         }
     }
 
-    @Throws
-    override fun downloadImage(id: Int): ResponseEntity<InputStreamResource> {
+    @Throws(Exception::class)
+    override fun downloadImage(id: String): ResponseEntity<InputStreamResource> {
         val jadwalPpdb = findByIdOrThrowNotFound(id)
         val filePath = jadwalPpdb.image
 
@@ -129,7 +130,7 @@ class RegisScheduleServiceImpl(
             .body(resource)
     }
 
-    private fun findByIdOrThrowNotFound(id: Int): RegistrationSchedule {
+    private fun findByIdOrThrowNotFound(id: String): RegistrationSchedule {
         return regisScheduleRepository.findByIdOrNull(id)
             ?: throw IllegalArgumentException("Jadwal PPDB with id $id not found")
     }

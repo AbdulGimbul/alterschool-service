@@ -10,22 +10,21 @@ import java.util.Date
 @Table(name = "auth_user")
 data class AuthUser(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_unique")
-    val id: Int,
+    val id: String,
     @Column(name = "username")
     val _username: String,
     @Column(name = "password")
     val _password: String,
     @ManyToOne(cascade = [CascadeType.ALL],
-        fetch = FetchType.EAGER)
+        fetch = FetchType.LAZY)
     @JoinColumn(name = "id_role")
     val role: AuthUserRole,
     @Column(name = "last_login")
     val lastLogin: Date? = null,
     @Column(name = "created_at")
     val createdAt: Date = Date(),
-    @Column(name = "modified_at")
+    @Column(name = "updated_at")
     val updatedAt: Date? = null
 ) : UserDetails {
 

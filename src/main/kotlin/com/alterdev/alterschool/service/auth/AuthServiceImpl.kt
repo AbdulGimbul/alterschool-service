@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service
 @Service
 class AuthServiceImpl(
     private val authUserRepository: AuthUserRepository,
-private val authManager: AuthenticationManager,
-private val jwtService: JwtService
+    private val authManager: AuthenticationManager,
+    private val jwtService: JwtService
 
 ) : AuthService {
     override fun login(loginUserRequest: LoginUserRequest, httpServletRequest: HttpServletRequest): UserLoginResponse {
@@ -37,5 +37,4 @@ private val jwtService: JwtService
             token = jwtToken
         )
     }
-
 }

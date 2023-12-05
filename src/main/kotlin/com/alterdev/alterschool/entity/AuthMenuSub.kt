@@ -8,23 +8,27 @@ import java.util.*
 @Table(name = "auth_menu_sub")
 data class AuthMenuSub(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_unique")
-    val id: Int,
-    val no: Int,
-    val name: String,
-    val icon: String,
-    val url: String,
+    val id: String,
+
+    var no: Int,
+    var name: String,
+    var icon: String,
+    var url: String,
+
     @Column(name = "is_notif")
-    val isNotif: Boolean,
+    var isNotif: Boolean,
+
     @Column(name = "is_hidden")
-    val isHidden: Boolean,
-    @ManyToOne(cascade = [CascadeType.ALL],
-        fetch = FetchType.EAGER)
+    var isHidden: Boolean,
+
+    @ManyToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinColumn(name = "id_menu")
-    val menu: AuthMenu,
+    var menu: AuthMenu,
+
     @Column(name = "created_at")
     val createdAt: Date = Date(),
-    @Column(name = "modified_at")
+
+    @Column(name = "updated_at")
     val updatedAt: Date? = null
 )

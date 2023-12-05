@@ -11,15 +11,15 @@ import org.springframework.web.multipart.MultipartFile
 interface RegisScheduleService {
     fun create(regisScheduleCreateReq: RegisScheduleCreateReq): RegisScheduleResponse
 
-    fun get(id: Int): RegisScheduleResponse
+    fun get(id: String): RegisScheduleResponse
 
-    fun update(id: Int, regisScheduleUpdateReq: RegisScheduleUpdateReq): RegisScheduleResponse
+    fun update(id: String, regisScheduleUpdateReq: RegisScheduleUpdateReq): RegisScheduleResponse
 
-    fun delete(id: Int)
+    fun delete(id: String)
 
-    fun getAll(ListRequest: ListRequest): List<RegisScheduleResponse>
+    fun getAll(listRequest: ListRequest): List<RegisScheduleResponse>
 
-    fun uploadImage(id: Int, imageFile: MultipartFile): RegisScheduleResponse
+    fun uploadImage(id: String, imageFile: MultipartFile): RegisScheduleResponse
 
-    fun downloadImage(id: Int): ResponseEntity<InputStreamResource>
+    fun downloadImage(id: String): ResponseEntity<InputStreamResource>
 }

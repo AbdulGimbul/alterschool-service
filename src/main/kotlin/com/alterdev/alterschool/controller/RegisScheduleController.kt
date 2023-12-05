@@ -1,8 +1,8 @@
 package com.alterdev.alterschool.controller
 
+import com.alterdev.alterschool.model.request.ListRequest
 import com.alterdev.alterschool.model.request.RegisScheduleCreateReq
 import com.alterdev.alterschool.model.request.RegisScheduleUpdateReq
-import com.alterdev.alterschool.model.request.ListRequest
 import com.alterdev.alterschool.service.registerschedule.RegisScheduleService
 import com.alterdev.alterschool.util.HttpResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -36,7 +36,7 @@ class RegisScheduleController(val regisScheduleService: RegisScheduleService) {
         summary = "Get jadwal ppdb",
     )
     @GetMapping("/{id}")
-    fun getJadwalPpdb(@PathVariable("id") id: Int): ResponseEntity<Map<String, Any?>> {
+    fun getJadwalPpdb(@PathVariable("id") id: String): ResponseEntity<Map<String, Any?>> {
         val response = regisScheduleService.get(id)
 
         return HttpResponse.setResp(data = response, message = "Success", status = HttpStatus.OK)
@@ -63,7 +63,7 @@ class RegisScheduleController(val regisScheduleService: RegisScheduleService) {
     )
     @PutMapping("/{id}")
     fun updateJadwalPpdb(
-        @PathVariable("id") id: Int,
+        @PathVariable("id") id: String,
         @RequestBody body: RegisScheduleUpdateReq
     ): ResponseEntity<Map<String, Any?>> {
         val response = regisScheduleService.update(id, body)
@@ -75,7 +75,7 @@ class RegisScheduleController(val regisScheduleService: RegisScheduleService) {
         summary = "Delete jadwal ppdb",
     )
     @DeleteMapping("/{id}")
-    fun deleteJadwalPpdb(@PathVariable("id") id: Int): ResponseEntity<Map<String, Any?>> {
+    fun deleteJadwalPpdb(@PathVariable("id") id: String): ResponseEntity<Map<String, Any?>> {
         regisScheduleService.delete(id)
 
         return HttpResponse.setResp<String>(message = "Success", status = HttpStatus.OK)
@@ -86,7 +86,7 @@ class RegisScheduleController(val regisScheduleService: RegisScheduleService) {
     )
     @PostMapping("/{id}/upload-image", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun uploadImageJadwalPpdb(
-        @PathVariable("id") id: Int,
+        @PathVariable("id") id: String,
         @RequestParam("image") imageFile: MultipartFile
     ): ResponseEntity<Map<String, Any?>> {
         val response = regisScheduleService.uploadImage(id, imageFile)
@@ -98,9 +98,8 @@ class RegisScheduleController(val regisScheduleService: RegisScheduleService) {
         summary = "Download image jadwal ppdb",
     )
     @GetMapping("/{id}/download-image")
-    fun downloadImageJadwalPpdb(@PathVariable("id") id: Int): ResponseEntity<InputStreamResource> {
-        val response = regisScheduleService.downloadImage(id)
+    fun downloadImageJadwalPpdb(@PathVariable("id") id: String): ResponseEntity<InputStreamResource> {
 
-        return response
+        return regisScheduleService.downloadImage(id)
     }
 }

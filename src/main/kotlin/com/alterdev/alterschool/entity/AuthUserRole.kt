@@ -7,22 +7,23 @@ import java.util.*
 @Table(name = "auth_user_role")
 data class AuthUserRole(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_unique")
-    val id: Int,
-    val role: String,
-    val url: String,
-    @OneToMany(mappedBy = "role", cascade = [CascadeType.ALL],
-        fetch = FetchType.EAGER)
-    val users: List<AuthUser>,
-    @ManyToMany(cascade = [CascadeType.ALL],
-        fetch = FetchType.EAGER)
-    @JoinTable(name = "auth_menu_navigation",
+    val id: String,
+
+    var role: String,
+    var url: String,
+
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(
+        name = "auth_menu_navigation",
         joinColumns = [JoinColumn(name = "id_role")],
-        inverseJoinColumns = [JoinColumn(name = "id_menu")])
-    val menus: List<AuthMenu>,
+        inverseJoinColumns = [JoinColumn(name = "id_menu")]
+    )
+    var menus: Set<AuthMenu> = HashSet(),
+
     @Column(name = "created_at")
     val createdAt: Date = Date(),
-    @Column(name = "modified_at")
+
+    @Column(name = "updated_at")
     val updatedAt: Date? = null
 )

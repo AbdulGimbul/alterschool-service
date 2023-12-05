@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.Optional
 
 interface AuthUserRepository
-    : JpaRepository<AuthUser, Int>{
+    : JpaRepository<AuthUser, String>{
 
         fun findBy_username(username: String): AuthUser?
 

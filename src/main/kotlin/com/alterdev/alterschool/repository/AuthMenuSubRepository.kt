@@ -4,4 +4,4 @@ import com.alterdev.alterschool.entity.AuthMenuSub
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface AuthMenuSubRepository
-    : JpaRepository<AuthMenuSub, Int>
+    : JpaRepository<AuthMenuSub, String>

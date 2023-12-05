@@ -2,23 +2,25 @@ package com.alterdev.alterschool.entity
 
 import jakarta.persistence.*
 import java.util.*
+import kotlin.collections.HashSet
 
 @Entity
 @Table(name = "auth_menu")
 data class AuthMenu(
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_unique")
-    val id: Int,
-    val name: String,
-    @OneToMany(mappedBy = "menu", cascade = [CascadeType.ALL],
-        fetch = FetchType.EAGER)
-    val subs: List<AuthMenuSub>,
-    @ManyToMany(mappedBy = "menus", cascade = [CascadeType.ALL],
-        fetch = FetchType.EAGER)
-    val roles: List<AuthUserRole>,
+    val id: String,
+    var name: String,
+
+
+    @ManyToMany(
+        cascade = [CascadeType.ALL],
+        mappedBy = "menus"
+    )
+    val roles: Set<AuthUserRole> = HashSet(),
+
     @Column(name = "created_at")
     val createdAt: Date = Date(),
-    @Column(name = "modified_at")
+    @Column(name = "updated_at")
     val updatedAt: Date? = null
 )

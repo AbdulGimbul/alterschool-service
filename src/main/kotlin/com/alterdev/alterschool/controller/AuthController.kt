@@ -3,6 +3,7 @@ package com.alterdev.alterschool.controller
 import com.alterdev.alterschool.model.request.LoginUserRequest
 import com.alterdev.alterschool.service.auth.AuthService
 import com.alterdev.alterschool.util.HttpResponse
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Auth")
 class AuthController(
     private val authService: AuthService
 ) {
